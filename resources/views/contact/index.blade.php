@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Look! I'm CRUDding</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href=" {{asset('//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css') }}">
 </head>
 <body>
 <div class="container">
@@ -25,6 +25,8 @@
 @if (Session::has('message'))
     <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
+
+
 
 <table class="table table-striped table-bordered">
     <thead>
@@ -47,7 +49,8 @@
             <td>{{ $value->fonction }}</td>
             <td>{{ $value->entreprise }}</td>
             <td>{{ $value->tel}}</td>
-            <td>{{ $value->image}}</td>
+      
+            <td> <img src="images/{{$value->image}}" alt="profile Pic" height="100" width="200"></td>
 
             <!-- we will also add show, edit, and delete buttons -->
             <td>

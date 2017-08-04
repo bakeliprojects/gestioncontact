@@ -16,6 +16,10 @@
         <li><a href="{{ URL::to('contact/create') }}">Create a contact</a>
     </ul>
 </nav>
+@if (Session::has('error'))
+    <div class="alert alert-info">{{ Session::get('error') }}</div>
+@endif
+
 
 <h1>Create a contact</h1>
 

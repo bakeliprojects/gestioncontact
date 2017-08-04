@@ -1,13 +1,18 @@
-<!-- app/views/contact/edit.blade.php -->
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Look! I'm CRUDding</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
 </head>
+  
+
+
 <body>
 <div class="container">
+
+
 
 <nav class="navbar navbar-inverse">
     <div class="navbar-header">
@@ -21,13 +26,12 @@
 
 <h1>Edit {{ $contact->nom}}</h1>
 
-<!-- if there are creation errors, they will show here -->
 {{ HTML::ul($errors->all()) }}
 
-<!-- {!! Form::open( array( 'route' => 'admin.products.store', 'class' => 'form', 'novalidate' => 'novalidate', files' => true)) !!} -->
 
 
-{{ Form::model($contact, array('route' => array('contact.update', $contact->id)) }}
+{!! Form::model($contact, ['route' => ['contact.update', $contact->id], 'method' => 'patch','files'=>true]) !!}
+
 
     <div class="form-group">
         {{ Form::label('nom', 'Nom') }}
@@ -53,23 +57,59 @@
         {{ Form::label('tel', 'Tel') }}
         {{ Form::number('tel', null, array('class' => 'form-control')) }}
     </div>
+
      <div class="form-group">
-        {{ Form::label('image', 'IMAGE') }}
-        {{ Form::file('image', null, array('class' => 'form-control')) }}
-    </div>
 
+ <input type='button' id='remove' value='remove' class='hide'/>
+<input type='file' name="image"  id="imgInp" /><br> 
 
+   <img src="http://localhost/gestioncontact/public/images/{{$contact->image}}", id="blah" alt="profile Pic" height="100" width="200" /> 
+        <!--   {{ Form::label('image', 'IMAGES',['value' => 'remove', 'id' => 'remove', 'class' => 'control_label'])}}
+          {{ Form::file('image', null, array('class' => 'form-control', 'name' => 'image', 'id' => 'imgInp'))}}          -->  
+   </div>
+   <div>
     
-
-    <!-- <div class="form-group">
-        {{ Form::label('nerd_level', 'Nerd Level') }}
-        {{ Form::select('nerd_level', array('0' => 'Select a Level', '1' => 'Sees Sunlight', '2' => 'Foosball Fanatic', '3' => 'Basement Dweller'), null, array('class' => 'form-control')) }}
-    </div>
- -->
+ 
     {{ Form::submit('Edit the contact!', array('class' => 'btn btn-primary')) }}
 
-{{ Form::close() }}
+    {{ Form::close() }}
 
 </div>
+ <script>
+$('#blah').show();
+$('#remove').hide();  
+function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#imgInp").change(function(){
+        if( $('#imgInp').val()!="{{$contact->image}}"){
+            
+            $('#image').show();
+            $('#blah').show('slow');
+      }
+        else{ $('#image').hide();$('#blah').hide('slow');}
+        readURL(this);
+    });
+  
+    $('#image').click(function(){
+          $('#imgInp').val('');
+          $(this).hide();
+          $('#blah').hide('slow');
+ $('#blah').attr('src','http://upload.wikimedia.org/wikipedia/commons/thumb/4/40/No_pub.svg/150px-No_pub.svg.png');
+});
+     
+ </script>
+
+
+
 </body>
 </html>

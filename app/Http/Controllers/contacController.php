@@ -13,6 +13,7 @@ use Redirect;
 
 
 
+
 class contacController extends Controller
 {
     //
@@ -53,25 +54,41 @@ public function create()
     {
         // validate
         // read more on validation at http://laravel.com/docs/validation
+
     	$rules = array(
     		'nom' => 'required|nom',
     		'prenom'  => 'required|prenom',
     		'fonction' => 'required|fonction',
     		'entreprise' => 'required|entreprise',
     		'tel' => 'required|tel',
-
     		'image' => 'required|images|mimes:jpeg,png,jpg,gif,svg|max:2048'
 
 
     		);
-        // $validator = Validator::make(Input::all(), $rules);
 
-        // // // process the login
-        // if ($validator->fails()) {
-        //     return Redirect::to('contact/create')
-        //         ->withErrors($validator)
 
-        // } else {
+$validator = Validator::make(
+    Input::all(),
+    $rules
+
+);
+
+if ($validator->fails())
+{
+    // The given data did not pass validation
+
+
+        Session::flash('error', 'veuiilez saisir tous les champs !');
+
+    return Redirect::back();
+
+
+}
+else
+{
+
+
+        
 
     	$destination='images';
        
@@ -93,62 +110,36 @@ public function create()
 
 
 
-
-             // $imageName = $product->id . '.' . $request->file('image')->getClientOriginalExtension();
-
-             //  $request->file('image')->move(base_path() . '/public/image/', $imageName);
-
-
-
-
     	Session::flash('message', 'Succe
             // redirectssfully created contact!');
+
     		return Redirect::to('contact');
+        }
+
     	}
 
 
     	public function show($id)
     	{
-        // get the nerd
+        // get the contact
     		$contact = contact::find($id);
 
 
-        // show the view and pass the nerd to it
+        // show the view and pass the contactct to it
     		return View::make('contact.show')
     		->with('contact', $contact);
     	}
 
 
+		public  function edit($id)
+		{
+		        // get the contact
+			$contact = contact::find($id);
 
-
-
-
-/**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-
-/**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-public  function edit($id)
-{
-        // get the nerd
-	$contact = contact::find($id);
-
-        // show the edit form and pass the nerd
-	return View::make('contact.edit')
-	->with('contact', $contact);
-}
-
-// app/controllers/NerdController.php
-
-
+		        // show the edit form and pass the contact
+			return View::make('contact.edit')
+			->with('contact', $contact);
+		}  
 
 
 
@@ -158,39 +149,76 @@ public  function edit($id)
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        // validate
-       // read more on validation at http://laravel.com/docs/validation
     	$rules = array(
     		'nom' => 'required|nom',
     		'prenom' => 'required|prenom',
     		'fonction' => 'required|fonction',
     		'entreprise' => 'required|entreprise',
-    		'tel' => 'required|tel'
+    		'tel' => 'required|tel',
+    		 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     		);
-    	$validator = Validator::make(Input::all(), $rules);
-
-        // // process the login
-         // if ($validator->fails()) {
-         //   return Redirect::to('contact/' . $id . '/edit')
-         //        ->withErrors($validator)
-         //      ->withInput(Input::except('password'));
-         // } else {
+        
+              
+ if (Input::hasFile('image')) {
 
 
-    	$contact = contact::find($id);
-    	$contact->nom = Input::get('nom');
-    	$contact->prenom = Input::get('prenom');
-    	$contact->fonction = Input::get('fonction');
-    	$contact->entreprise = Input::get('entreprise');
-    	$contact->tel = Input::get('tel');
-    	$contact->save();
 
-            // redirect
-    	Session::flash('message', 'Successfully updated contact!');
-    	return Redirect::to('contact');
+            $contact = contact::find($id);
+            	   
+            $destination='images';
+
+        	$extension=Input::file('image')->getClientOriginalExtension();
+
+        	$filename=rand(11111,99999).'.'.$extension;   
+
+             $uploadSuccess=Input::file('image')->move($destination, $filename);
+
+
+
+
+
+
+// $file_name = $generate_name . '.' . $extension;
+//         $image->move(public_path() . '/images/', $file_name);
+
+
+        //      if ($request->hasFile('input_img')) {
+        //      if($request->file('input_img')->isValid()) {
+        // try {
+        //     $file = $request->file('input_img');
+        //     $name = time() . '.' . $file->getClientOriginalExtension();
+           
+
+// $filenam = time().'.'.$request->image->getClientOriginalExtension();
+
+
+		    	$contact->nom = Input::get('nom');
+		    	$contact->prenom = Input::get('prenom');
+		    	$contact->fonction = Input::get('fonction');
+		    	$contact->entreprise = Input::get('entreprise');
+		    	$contact->tel = Input::get('tel');
+		    	$contact->image = $filename;
+                $contact->save();
+
+//                  $request->file('input_img')->move("fotoupload", $name);
+
+//                  } catch (Illuminate\Filesystem\FileNotFoundException $e) {
+
+//         }
+//     } 
+// }
+// $request->image->move(public_path('avatars'), $filenam);
+    
+//update sas changer la photo
+              } else {
+        echo 'no file uploaded. oops.';
     }
+
+	    	Session::flash('message', 'Successfully updated contact!');
+	    	return Redirect::to('contact');
+	    } 
     
 
 
@@ -212,55 +240,4 @@ public  function edit($id)
     	return Redirect::back();
     }
 
-
-
-
-//// images
-/**
-
-     * Create a new controller instance.
-
-     *
-
-     * @return void
-
-     */
-
-    // public function __construct()
-
-    // {
-
-    //     $this->middleware('auth');
-
-    // }
-
-
-    // public function fileUpload(Request $request)
-
-    // {
-
-    //     $this->validate($request, [
-
-    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
-    //     ]);
-
-
-    //     $image = $request->file('image');
-
-    //     $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-
-    //     $destinationPath = public_path('/images');
-
-    //     $image->move($destinationPath, $input['imagename']);
-
-
-    //     $this->postImage->add($input);
-
-
-    //     return back()->with('success','Image Upload successful');
-
-    // }
-
-
-}
+ }

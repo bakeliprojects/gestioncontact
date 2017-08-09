@@ -55,6 +55,7 @@ public function create()
         // validate
         // read more on validation at http://laravel.com/docs/validation
 
+       
     	$rules = array(
     		'nom' => 'required|nom',
     		'prenom'  => 'required|prenom',
@@ -63,83 +64,116 @@ public function create()
     		'tel' => 'required|tel',
     		'image' => 'required|images|mimes:jpeg,png,jpg,gif,svg|max:2048'
 
-
     		);
+         $erreurs = array(); 
+     
+        // $formulaireOK=false; 
 
+       
+if( Input::get('nom') == Null)  // Si la valeur "nom" est vide 
+    { 
+        // On rempli le message  des erreurs par un texte 
+        Session::flash('error', 'veuiilez saisir  le champs nom!');
+             return Redirect::back();
+    } 
+     
+    if( Input::get('prenom') == "")  // Si la valeur "prenom" est vide 
+    { 
+        // On rempli le message des erreurs par un texte 
+       Session::flash('error', 'veuiilez saisir le champ prenom!');
+             return Redirect::back();
+    } 
+     
+    if( Input::get('fonction') == Null) // Si la valeur du fonction  est vide 
+    { 
+       Session::flash('error', 'veuiilez saisir tous les champs fontion!');
+             return Redirect::back();
+     }
 
-$validator = Validator::make(
-    Input::all(),
-    $rules
+    if( Input::get('entreprise') == "") 
+    { 
+      Session::flash('error', 'veuiilez saisir le champ entrprise!');
+             return Redirect::back();
+    }
+     
+    if( Input::get('tel') == "") 
+    { 
+        // Si la valeur  tel est vide 
+      Session::flash('error', 'veuiilez saisir le champ tel!');
+             return Redirect::back(); 
+    }
 
-);
+if( Input::hasFile('image') == "") 
+    { 
+      Session::flash('error', 'veuiilez saisir le champ image!');
+             return Redirect::back(); 
+    }
+ 
+     //    if (Input::get('nom')==Null &&
+     //        Input::get('prenom')==Null &&
+     //        Input::get('fonction')==Null &&
+     //        Input::get('entreprise')==Null  &&
+     //        Input::get('tel')==Null 
+     // )
 
-if ($validator->fails())
-{
     // The given data did not pass validation
 
 
-        Session::flash('error', 'veuiilez saisir tous les champs !');
-
-    return Redirect::back();
-
-
-}
-else
-{
+    if( empty($erreurs))     // S'il ya pas  d'erreurs, 
+    { 
+        // CREATION DU contact    
 
 
-        
+           $destination='images';
 
-    	$destination='images';
-       
-       $extension=Input::file('image')->getClientOriginalExtension();
+           $extension=Input::file('image')->getClientOriginalExtension();
 
-    	$filename=rand(11111,99999).'.'.$extension;
+           $filename=rand(11111,99999).'.'.$extension;
 
-    	Input::file('image')->move($destination, $filename);
+           Input::file('image')->move($destination, $filename);
 
 
-    	$contact = new contact;
-    	$contact->nom = Input::get('nom');
-    	$contact->prenom = Input::get('prenom');
-    	$contact->fonction = Input::get('fonction');
-    	$contact->entreprise = Input::get('entreprise');
-    	$contact->tel = Input::get('tel');
-    	$contact->image = $filename;
-       $contact->save();
+           $contact = new contact;
+           $contact->nom = Input::get('nom');
+           $contact->prenom = Input::get('prenom');
+           $contact->fonction = Input::get('fonction');
+           $contact->entreprise = Input::get('entreprise');
+           $contact->tel = Input::get('tel');
+           $contact->image = $filename;
+           $contact->save();
+
+// On met la variable du formulaireOK appelé tout en haut en VALIDE (soit true) 
+        // $formulaireOK=true; 
+
+           Session::flash('message', 'Succe redirectssfully created contact!');
+
+              return Redirect::to('contact');
+          }
+
+      }
 
 
-
-    	Session::flash('message', 'Succe
-            // redirectssfully created contact!');
-
-    		return Redirect::to('contact');
-        }
-
-    	}
-
-
-    	public function show($id)
-    	{
+      public function show($id)
+      {
         // get the contact
-    		$contact = contact::find($id);
+          $contact = contact::find($id);
 
 
         // show the view and pass the contactct to it
-    		return View::make('contact.show')
-    		->with('contact', $contact);
-    	}
+          return View::make('contact.show')
+          ->with('contact', $contact);
+      }
 
 
-		public  function edit($id)
-		{
+      public  function edit($id)
+      {
 		        // get the contact
-			$contact = contact::find($id);
+         $contact = contact::find($id);
 
 		        // show the edit form and pass the contact
-			return View::make('contact.edit')
-			->with('contact', $contact);
-		}  
+         return View::make('contact.edit')
+         ->with('contact', $contact);
+     }  
 
 
 
@@ -157,71 +191,102 @@ else
     		'fonction' => 'required|fonction',
     		'entreprise' => 'required|entreprise',
     		'tel' => 'required|tel',
-    		 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    		);
-        
-              
- if (Input::hasFile('image')) {
+         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+         );
 
+$erreurs = array(); 
+     
+      
+if( Input::get('nom') == Null)  // Si la valeur "nom" est vide 
+    { 
+        // On rempli le message  des erreurs par un texte 
+        Session::flash('error', 'veuiilez remplir  le champs nom!');
+             return Redirect::back();
+    } 
+     
+    if( Input::get('prenom') == "")  // Si la valeur "prenom" est vide 
+    { 
+        // On rempli le message des erreurs par un texte 
+       Session::flash('error', 'veuiilez remplir le champ prenom!');
+             return Redirect::back();
+    } 
+     
+    if( Input::get('fonction') == Null) // Si la valeur du fonction  est vide 
+    { 
+       Session::flash('error', 'veuiilez saisir tous les champs fonction!');
+             return Redirect::back();
+     }
 
-
-            $contact = contact::find($id);
-            	   
-            $destination='images';
-
-        	$extension=Input::file('image')->getClientOriginalExtension();
-
-        	$filename=rand(11111,99999).'.'.$extension;   
-
-             $uploadSuccess=Input::file('image')->move($destination, $filename);
-
-
-
-
-
-
-// $file_name = $generate_name . '.' . $extension;
-//         $image->move(public_path() . '/images/', $file_name);
-
-
-        //      if ($request->hasFile('input_img')) {
-        //      if($request->file('input_img')->isValid()) {
-        // try {
-        //     $file = $request->file('input_img');
-        //     $name = time() . '.' . $file->getClientOriginalExtension();
-           
-
-// $filenam = time().'.'.$request->image->getClientOriginalExtension();
-
-
-		    	$contact->nom = Input::get('nom');
-		    	$contact->prenom = Input::get('prenom');
-		    	$contact->fonction = Input::get('fonction');
-		    	$contact->entreprise = Input::get('entreprise');
-		    	$contact->tel = Input::get('tel');
-		    	$contact->image = $filename;
-                $contact->save();
-
-//                  $request->file('input_img')->move("fotoupload", $name);
-
-//                  } catch (Illuminate\Filesystem\FileNotFoundException $e) {
-
-//         }
-//     } 
-// }
-// $request->image->move(public_path('avatars'), $filenam);
-    
-//update sas changer la photo
-              } else {
-        echo 'no file uploaded. oops.';
+    if( Input::get('entreprise') == "") 
+    { 
+      Session::flash('error', 'veuiilez saisir le champ entrprise!');
+             return Redirect::back();
+    }
+     
+    if( Input::get('tel') == "") 
+    { 
+        // Si la valeur  tel est vide 
+      Session::flash('error', 'veuiilez modifier le champ tel!');
+             return Redirect::back(); 
     }
 
-	    	Session::flash('message', 'Successfully updated contact!');
-	    	return Redirect::to('contact');
-	    } 
-    
+if( Input::hasFile('image') == "") 
+    { 
+      Session::flash('error', 'veuiilez modifier le champ image!');
+             return Redirect::back(); 
+    }
+ 
 
 
+if( empty($erreurs))   // Si le tableau des "erreurs" est vide, 
+
+
+
+    {
+
+
+
+        $contact = contact::find($id);
+
+        $contact->nom = Input::get('nom');
+        $contact->prenom = Input::get('prenom');
+        $contact->fonction = Input::get('fonction');
+        $contact->entreprise = Input::get('entreprise');
+        $contact->tel = Input::get('tel');
+        $contact->image =$contact->image ;
+        $contact->save();
+}
+         if (Input::hasFile('image')) {
+
+       
+        $destination='images';
+
+        $extension=Input::file('image')->getClientOriginalExtension();
+
+        $filename=rand(11111,99999).'.'.$extension;   
+
+        $uploadSuccess=Input::file('image')->move($destination, $filename);
+
+
+
+        $contact->nom = Input::get('nom');
+        $contact->prenom = Input::get('prenom');
+        $contact->fonction = Input::get('fonction');
+        $contact->entreprise = Input::get('entreprise');
+        $contact->tel = Input::get('tel');
+        $contact->image = $filename;
+        $contact->save();
+
+
+//update sa changer la photo
+    // } else {
+    //     echo 'no file uploaded. oops.';
+    }
+
+    Session::flash('message', 'Successfully updated contact!');
+    return Redirect::to('contact');
+}
+  
 
     /**
      * Remove the specified resource from storage.
@@ -240,4 +305,4 @@ else
     	return Redirect::back();
     }
 
- }
+}

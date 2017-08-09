@@ -26,7 +26,7 @@
 <!-- if there are creation errors, they will show here -->
 
 
-{{ Form::open(array('url' => 'contact','files' => true))}}
+{{ Form::open(array('url' => 'bin','files' => true))}}
 
     <div class="form-group">
         {{ Form::label('nom', 'Nom') }}
@@ -51,7 +51,7 @@
 
 <div class="form-group">
         {{ Form::label('tel', 'TEL') }}
-        {{ Form::text('tel', Input::old('tel'), array('class' => 'form-control')) }}
+        {{ Form::number('tel', Input::old('tel'), array('class' => 'form-control')) }}
     </div>
 
 <div class="form-group">

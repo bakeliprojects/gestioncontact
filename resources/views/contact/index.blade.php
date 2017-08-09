@@ -15,7 +15,7 @@
     </div>
     <ul class="nav navbar-nav">
         <li><a href="{{ URL::to('contact') }}">View All contact</a></li>
-        <li><a href="{{ URL::to('contact/create') }}">Create a contact</a>
+        <li><a href="{{ URL('bin/create') }}">Create a contact</a>
     </ul>
 </nav>
 
@@ -64,10 +64,11 @@
 
 
                 <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-                <a class="btn btn-small btn-success" href="{{ URL::to('contact/' . $value->id) }}">Show this contact</a>
+               <!--  <a class="btn btn-small btn-success" href="{{ URL::to('contact/' . $value->id) }}">Show this contact</a> -->
+                 <a class="btn btn-small btn-success" href="{{url('kine/' . $value->id) }}">Show this contact</a>
 
                 <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                <a class="btn btn-small btn-info" href="{{ URL::to('contact/' . $value->id . '/edit') }}">Edit this contact</a>
+                <a class="btn btn-small btn-info" href="{{ url('giv/' .$value->id . '/edit') }}">Edit this contact</a>
 
 
 

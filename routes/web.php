@@ -11,19 +11,23 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (){               
     return view('welcome');
 });
 
   Route::resource('contact', 'contacController');
 
+ 
+  Route::get('fatou', 'contacController@index');
+  Route::get('kine/{id}', 'contacController@show');
+  Route::get('giv/{id}/edit', 'contacController@edit');
 
 
+ Route::get('bin/create', 'ContacController@create');
+ Route::post('bin', 'ContacController@store');
 
 
-
-
-  //Route::get('contact/show/{id}','contacController@show');
+//   //Route::get('contact/show/{id}','contacController@show');
 
 //// les  routes  ogmenté 
 

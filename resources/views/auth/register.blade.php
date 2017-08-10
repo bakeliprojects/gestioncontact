@@ -23,7 +23,7 @@
                                 @endif
                             </div>
                         </div>
-
+<!-- ajout du champ first name -->
 
 
                          <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -92,3 +92,5 @@
     </div>
 </div>
 @endsection
+
+

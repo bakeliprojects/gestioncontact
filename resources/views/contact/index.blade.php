@@ -17,6 +17,13 @@
         <li><a href="{{ URL::to('contact') }}">View All contact</a></li>
         <li><a href="{{ URL('bin/create') }}">Create a contact</a>
     </ul>
+
+
+    <!--  ajout de logout  -->
+
+ 
+
+
 </nav>
 
 <h1>All the contact</h1>

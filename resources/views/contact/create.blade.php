@@ -5,16 +5,32 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 </head>
 <body>
+
+
+
 <div class="container">
 
 <nav class="navbar navbar-inverse">
     <div class="navbar-header">
         <a class="navbar-brand" href="{{ URL::to('contact') }}">contact Alert</a>
+        
+<ul class="nav navbar-nav navbar-right">
+
+ <!--  -->
+         @extends('layouts.app')
+
+</u>
+
+
     </div>
     <ul class="nav navbar-nav">
         <li><a href="{{ URL::to('contact') }}">View All contact</a></li>
         <li><a href="{{ URL::to('contact/create') }}">Create a contact</a>
     </ul>
+
+
+ 
+
 </nav>
 @if (Session::has('error'))
     <div class="alert alert-info">{{ Session::get('error') }}</div>
@@ -69,5 +85,7 @@
 {{ Form::close() }}
 
 </div>
+
+ 
 </body>
 </html>

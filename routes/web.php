@@ -31,3 +31,19 @@ Route::get('/', function (){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('logout', 'Auth\LoginController@logout');
+
+
+
+
+Route::get('logout', 'Auth\LoginController@logout');
+Route::get('bou/login', 'Auth\LoginController@login');
+Route::get('ba/register', 'Auth\LoginController@register');
+
+
+
+
+
+
+

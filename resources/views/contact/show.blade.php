@@ -19,6 +19,10 @@
         <li><a href="{{ URL::to('contact')}}">View All contact</a></li>
         <li><a href="{{ URL::to('contact/create') }}">Create a contact</a>
     </ul>
+
+
+
+
 </nav>
 
 
@@ -94,7 +98,7 @@
       </div>
   </div>
 </div>
-
+ 
 
 </body>
 </html>

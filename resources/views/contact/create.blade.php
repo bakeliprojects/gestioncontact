@@ -17,7 +17,7 @@
 <ul class="nav navbar-nav navbar-right">
 
  <!--  -->
-         @extends('layouts.app')
+       
 
 </u>
 

@@ -10,6 +10,8 @@ use Validator;
 use Input;
 use Session;
 use Redirect;
+use Auth;
+
 
 
 
@@ -27,7 +29,10 @@ class contacController extends Controller
 	}
 
 
-
+  public function logoutcon(){
+     Auth::logout();
+  return redirect('login');
+  }
 
 
 
@@ -194,51 +199,51 @@ if( Input::hasFile('image') == "")
          'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
          );
 
-$erreurs = array(); 
+//            $erreurs = array(); 
      
       
-if( Input::get('nom') == Null)  // Si la valeur "nom" est vide 
-    { 
-        // On rempli le message  des erreurs par un texte 
-        Session::flash('error', 'veuiilez remplir  le champs nom!');
-             return Redirect::back();
-    } 
+// if( Input::get('nom') == Null)  // Si la valeur "nom" est vide 
+//     { 
+//         // On rempli le message  des erreurs par un texte 
+//         Session::flash('error', 'veuiilez remplir  le champs nom!');
+//              return Redirect::back();
+//     } 
      
-    if( Input::get('prenom') == "")  // Si la valeur "prenom" est vide 
-    { 
-        // On rempli le message des erreurs par un texte 
-       Session::flash('error', 'veuiilez remplir le champ prenom!');
-             return Redirect::back();
-    } 
+//     if( Input::get('prenom') == "")  // Si la valeur "prenom" est vide 
+//     { 
+//         // On rempli le message des erreurs par un texte 
+//        Session::flash('error', 'veuiilez remplir le champ prenom!');
+//              return Redirect::back();
+//     } 
      
-    if( Input::get('fonction') == Null) // Si la valeur du fonction  est vide 
-    { 
-       Session::flash('error', 'veuiilez saisir tous les champs fonction!');
-             return Redirect::back();
-     }
+//     if( Input::get('fonction') == Null) // Si la valeur du fonction  est vide 
+//     { 
+//        Session::flash('error', 'veuiilez saisir tous les champs fonction!');
+//              return Redirect::back();
+//      }
 
-    if( Input::get('entreprise') == "") 
-    { 
-      Session::flash('error', 'veuiilez saisir le champ entrprise!');
-             return Redirect::back();
-    }
+//     if( Input::get('entreprise') == "") 
+//     { 
+//       Session::flash('error', 'veuiilez saisir le champ entrprise!');
+//              return Redirect::back();
+//     }
      
-    if( Input::get('tel') == "") 
-    { 
-        // Si la valeur  tel est vide 
-      Session::flash('error', 'veuiilez modifier le champ tel!');
-             return Redirect::back(); 
-    }
+//     if( Input::get('tel') == "") 
+//     { 
+//         // Si la valeur  tel est vide 
+//       Session::flash('error', 'veuiilez modifier le champ tel!');
+//              return Redirect::back(); 
+//     }
 
-if( Input::hasFile('image') == "") 
-    { 
-      Session::flash('error', 'veuiilez modifier le champ image!');
-             return Redirect::back(); 
-    }
+// if( Input::hasFile('image') == "") 
+//     { 
+//       Session::flash('error', 'veuiilez modifier le champ image!');
+//              return Redirect::back(); 
+//     }
  
 
 
-if( empty($erreurs))   // Si le tableau des "erreurs" est vide, 
+// if( empty($erreurs))   // Si le tableau des "erreurs" est vide, 
 
 
 

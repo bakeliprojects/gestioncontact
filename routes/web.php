@@ -24,7 +24,7 @@ Route::get('/', function (){
 
 
  Route::get('bin/create', 'ContacController@create');
- Route::post('bin', 'ContacController@store');
+ Route::post('bin', 'contacController@store');
 
 
 
@@ -32,14 +32,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('deconect', 'ContacController@logoutcon');
+
+Route::get('deconect', 'contacController@logoutcon');
 
 
 
 
-// Route::post('logout', 'Auth\LoginController@logout');
-// Route::get('bou/login', 'Auth\LoginController@login');
-// Route::get('ba/register', 'Auth\LoginController@register');
+Route::post('conn', 'contacController@authenticate');
+
+
+// Route::get('regis/creates', 'ContacController@creates');
+Route::post('regis', 'ContacController@storess');          
 
 
 

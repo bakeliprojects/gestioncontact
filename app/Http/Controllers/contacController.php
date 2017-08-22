@@ -11,8 +11,7 @@ use Input;
 use Session;
 use Redirect;
 use Auth;
-
-
+use App\User;
 
 
 
@@ -37,12 +36,57 @@ class contacController extends Controller
 
 
 
+    public function authenticate()
+    {
+        
+        $email =  Input::get('email');
+        $password = Input::get('password');
+
+     //   dd($email);
+       
+          if (Auth::attempt(['email' => $email, 'password' => $password]))
+
+        {
+            return redirect('fatou');
+        }
+    }
+
+
+
+ public function storess(Request $request) {
+
+      //  $v = User::validate(Input::all());
+
+        $name = $request->input('name');
+        $firstname = $request->input('firstname');
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+
+        //if ( $v->passes() ) {  
+
+            $user = new User;
+            $user->name = $name;
+             $user->firstname = $firstname;
+              $user->email = $email;
+               $user->password = bcrypt($password);
+            $user->save();
+
+        //}
+ Auth::login($user);
+      
+         return Redirect::to('fatou');
+
+    }
+
+
+
 /**
      * Show the form for creating a new resource.
      *
      * @return Response
      */
-public function create()
+public function create() 
 {
         // load the create form (app/views/nerds/create.blade.php)
 	return View::make('contact.create');
@@ -246,9 +290,7 @@ if( Input::hasFile('image') == "")
 // if( empty($erreurs))   // Si le tableau des "erreurs" est vide, 
 
 
-
     {
-
 
 
         $contact = contact::find($id);
